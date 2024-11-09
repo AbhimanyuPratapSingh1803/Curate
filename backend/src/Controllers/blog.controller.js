@@ -274,4 +274,29 @@ const fetchBlog = asyncHandler(async (req, res) => {
     })
 })
 
-export {uploadCoverImage, uploadBlogImage, deleteImg, publish, fetchAllBlogs, updateDraft, saveDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog}
+const searchBlogs = asyncHandler(async (req, res) => {
+    const searchQuery = req.query.query || "";
+    
+    if(req.query.query === ""){
+        res.status(400).json({
+            success : false,
+            message : "Search query is empty!"
+        })
+    }
+
+    const blogs = await Blog.find({title : {$regex : searchQuery, $options : "i"}}).limit(5).populate("author", "fullName");
+    if(!blogs){
+        res.status(400).json({
+            success : false,
+            message : "Error fetching blogs"
+        })
+    }
+
+    res.status(200).json({
+        success : true,
+        data : blogs,
+        message : "All the blogs fetched successfully"
+    })
+})
+
+export {uploadCoverImage, uploadBlogImage, deleteImg, publish, fetchAllBlogs, updateDraft, saveDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog, searchBlogs}

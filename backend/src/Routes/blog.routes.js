@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../Middlewares/auth.middleware.js";
 import {upload} from "../Middlewares/multer.middleware.js"
-import {uploadCoverImage, deleteImg, uploadBlogImage, publish, fetchAllBlogs, saveDraft, updateDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog} from "../Controllers/blog.controller.js"
+import {uploadCoverImage, deleteImg, uploadBlogImage, publish, fetchAllBlogs, saveDraft, updateDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog, searchBlogs} from "../Controllers/blog.controller.js"
 
 const router = Router();
 
@@ -26,5 +26,7 @@ router.route(`/fetch-published`).post(verifyJWT, fetchPublished);
 router.route("/delete-blog").post(verifyJWT, deleteBlog);
 
 router.route("/fetch-blog").post(verifyJWT, fetchBlog);
+
+router.route("/search").get(verifyJWT, searchBlogs);
 
 export default router;

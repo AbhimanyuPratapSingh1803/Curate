@@ -98,7 +98,7 @@ const RecommendedBlog = ({
     }
 
     return (
-        <div className="flex flex-col xl:max-h-[325px] rounded-xl w-3/5 px-6 my-6 mx-auto border-[0.1px] bg-slate-950 border-slate-100 border-opacity-30">
+        <div className="flex flex-col xl:max-h-[325px] rounded-xl w-[90%] sm:w-3/5 px-6 my-6 mx-auto border-[0.1px] bg-slate-950 border-slate-100 border-opacity-30">
             <div className="w-full flex justify-between items-center">
                 <div className="flex flex-start  gap-4 items-center justify-start mt-5 mb-4">
                     <div className="avatar placeholder">
@@ -137,8 +137,8 @@ const RecommendedBlog = ({
             </div>
             <div className="flex  flex-col lg:flex-row gap-8 justify-start xl:justify-between items-center mb-5">
                 <div className="flex flex-col h-full w-full items-start justify-center gap-2">
-                    <p onClick={handleNavigate} className="text-2xl sm:text-2xl cursor-pointer text-white font-bold">{title}</p>
-                    <p className="text-slate-400 text-sm sm:text-base">
+                    <p onClick={handleNavigate} className="text-xl sm:text-2xl cursor-pointer text-white font-bold">{title}</p>
+                    <p className="text-slate-400 text-[13px] sm:text-base">
                         {para}
                     </p>
                 </div>

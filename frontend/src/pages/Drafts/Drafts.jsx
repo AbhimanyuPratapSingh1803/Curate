@@ -58,21 +58,26 @@ const Drafts = () => {
             <Navbar hideSearch={true}/>
             <div role="tablist" className="tabs mt-5 ml-5 tabs-bordered">
                 <input onClick={() => navigate("/drafts")} type="radio" name="my_tabs_1" role="tab" className="tab font-medium text-gray-300" aria-label="Drafts" defaultChecked/>
-                <div role="tabpanel" className="size-full tab-content mr-5 mt-10">
-                    {drafts.length > 0 ? drafts.map((draft) => (
-                        <RecommendedBlog
-                            key={draft._id}
-                            id={draft._id}
-                            coverImage={draft.coverImage}
-                            title={draft.title}
-                            subTitle={draft.subTitle}
-                            author={draft.author}
-                            content={draft.content}
-                            createdAt={draft.createdAt}
-                            status={draft.status}
-                            page={"myblogsDraft"}
-                        />
-                    )) : <p className="text-white mt-10 px-auto text-2xl font-semibold">You haven't made any drafts yet!!</p>}
+                <div role="tabpanel" className="size-full tab-content mr-5 pr-3 mt-10">
+                    {drafts.length > 0 ? 
+                        drafts.map((draft) => (
+                            <RecommendedBlog
+                                key={draft._id}
+                                id={draft._id}
+                                coverImage={draft.coverImage}
+                                title={draft.title}
+                                subTitle={draft.subTitle}
+                                author={draft.author}
+                                content={draft.content}
+                                createdAt={draft.createdAt}
+                                status={draft.status}
+                                page={"myblogsDraft"}
+                            />
+                        )) : 
+                        <div className="mt-10 px-auto pr-2">
+                            <p className="text-white text-2xl font-semibold">You haven't created any drafts yet!!</p>
+                        </div>
+                    }
                 </div>
 
                 <input onClick={() => navigate("/published")} type="radio" name="my_tabs_1" role="tab" className="tab font-medium text-gray-300" aria-label="Published"/>

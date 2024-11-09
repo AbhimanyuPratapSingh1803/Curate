@@ -243,13 +243,13 @@ const CreateBlog = () => {
                 hideSearch={true}
                 hideCreate={true}
             />
-            <div className="my-10 min-h-screen w-9/12 mx-auto flex flex-col gap-5">
+            <div className="my-10 min-h-screen w-11/12 sm:w-9/12 mx-auto flex flex-col gap-5">
                 {coverUrl != "" ? (
-                    <div className="relative w-full">
+                    <div className="relative w-fit">
                         <div
                             onClick={removeCoverImg}
-                            className="absolute cursor-pointer right-0 m-5 rounded-xl p-5 top-0 z-40 bg-slate-600">
-                            <RxCross1 className="text-black text-3xl font-extrabold" />
+                            className="absolute cursor-pointer right-0 m-2 sm:m-5 rounded-xl p-1 sm:p-5 top-0 z-40 bg-slate-600">
+                            <RxCross1 className="text-black text-2xl sm:text-3xl font-extrabold" />
                         </div>
                         <img
                             src={coverUrl}

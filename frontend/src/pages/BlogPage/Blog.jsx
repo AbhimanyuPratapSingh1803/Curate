@@ -94,7 +94,7 @@ const Blog = () => {
     return(
         <div className='w-screen bg-slate-950 pt-16 relative pb-10 min-h-screen'>
             <Navbar hideCreate = {true} hideSearch = {true}/>
-            <div className='my-10 min-h-screen w-9/12 mx-auto items-center flex flex-col gap-8'>
+            <div className='my-10 min-h-screen w-11/12 sm:w-9/12 mx-auto items-center flex flex-col gap-8'>
                 {blog.coverImage ? 
                     <div className='w-full mx-auto h-3/4 mb-4'>
                         <img className='rounded-lg' src={blog.coverImage} alt="Blog-image" />
@@ -103,23 +103,25 @@ const Blog = () => {
                     null
                 }
 
-                <div className='px-5 w-full h-full flex flex-col gap-5'>
+                <div className='sm:px-5 w-full h-full flex flex-col gap-5'>
                     <div className='flex flex-col gap-4 w-full h-fit'>
-                        <p className='text-5xl text-white font-bold text-center'>{blog.title}</p>
+                        <p className='text-3xl sm:text-5xl text-white font-bold text-center'>{blog.title}</p>
                         <p className='text-slate-400 font-md text-center'>{blog.subTitile}</p>
                     </div>
 
-                    <div className="flex justify-center items-center gap-5 mb-5">
-                        <div className="avatar placeholder">
-                            <div className="bg-neutral text-neutral-content w-14 rounded-full">
-                                <span className="text-lg">{initials}</span>
+                    <div className="flex flex-col justify-center items-center gap-3 mb-5">
+                        <div className='h-full w-full flex justify-center items-center gap-4'>
+                            <div className="avatar placeholder">
+                                <div className="bg-neutral text-neutral-content w-14 rounded-full">
+                                    <span className="text-lg">{initials}</span>
+                                </div>
                             </div>
+                            <p className='text-xl text-white font-semibold'>{blog.author.fullName}</p>
                         </div>
-                        <p className='text-xl text-white font-semibold'>{blog.author.fullName}</p>
                         <p>{formattedDate}</p>
                     </div>
 
-                    <div className='flex flex-col gap-8 min-h-screen items-center justify-center px-28'>
+                    <div className='flex flex-col gap-8 min-h-screen items-center justify-center px-2 sm:px-28'>
                         {blocks.map((block) => (
                             <div key={block.id} className='w-full flex justify-start text-white'>
                                 {block.type === "paragraph" && <p className='text-lg'>{block.data.text}</p>}
@@ -134,7 +136,7 @@ const Blog = () => {
                                     block.data.level === 3 && <p className='text-3xl font-bold text-white'>{block.data.text}</p>
                                 }
                                 {block.type === "list" && 
-                                    <ul className='mb-5 list-disc'>
+                                    <ul className='mb-5 pl-4 list-disc'>
                                         {block.data.items.map((item, index) => (
                                             <li key={index} dangerouslySetInnerHTML={{__html:item}} />
                                         ))}

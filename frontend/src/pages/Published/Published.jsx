@@ -54,7 +54,7 @@ const Published = () => {
     }
 
     return (
-        <div className="bg-slate-950 top-0 relative min-h-screen pt-20 pb-10 w-screen">
+        <div className="bg-slate-950 top-0 relative min-h-screen pt-20 pb-28 sm:pb-10 w-screen">
             <Navbar hideSearch={true}/>
             <div role="tablist" className="tabs mt-5 ml-5 tabs-bordered">
                 <input
@@ -83,7 +83,7 @@ const Published = () => {
                 />
                 <div
                     role="tabpanel"
-                    className="size-full tab-content px-auto mr-5 mt-10">
+                    className="size-full tab-content px-auto pr-3 mr-4 mt-10">
                     {published.length > 0 ? (
                         published.map((draft) => (
                             <RecommendedBlog
@@ -100,9 +100,11 @@ const Published = () => {
                             />
                         ))
                     ) : (
-                        <p className="text-white mt-10 px-auto text-2xl font-semibold">
-                            You haven't published any blog yet!!
-                        </p>
+                        <div className="mt-10 px-auto pr-2">
+                            <p className="text-white text-center text-2xl font-semibold">
+                                You haven't published any blog yet!!
+                            </p>
+                        </div>
                     )}
                 </div>
             </div>

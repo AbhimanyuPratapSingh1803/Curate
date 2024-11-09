@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <footer className="footer bg-slate-900 text-white items-center p-4">
-            <aside className="grid-flow-col gap-4 items-center">
+        <footer className="footer flex flex-col sm:flex-row sm:justify-between bg-slate-900 text-white gap-6 items-center p-4">
+            <aside className="flex flex-col sm:flex-row gap-2 sm:gap-5 justify-center sm:justify-between items-center">
                 <Link to={"/"}>
                     <div className="flex gap-2 items-center">
                         <TfiInfinite className="text-2xl font-bold text-blue-500"/>
@@ -16,7 +16,7 @@ const Footer = () => {
                     Copyright © {new Date().getFullYear()} - All right reserved
                 </p>
             </aside>
-            <nav className="grid-flow-col pr-5 gap-4 md:place-self-center md:justify-self-end">
+            <nav className="flex md:pr-5 gap-4 items-center justify-center md:justify-end">
                 <Link to={"/"}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
