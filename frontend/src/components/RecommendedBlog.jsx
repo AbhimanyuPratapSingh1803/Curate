@@ -126,7 +126,7 @@ const RecommendedBlog = ({
                                 <p className="py-4">Are you sure you want to delete this blog!</p>
                                 <div className="modal-action">
                                     <label onClick={() => handleDelete(localStorage.getItem("del"))} htmlFor="my_modal_6" className="btn btn-error">Delete</label>
-                                    <label htmlFor="my_modal_6" className="btn">Close</label>
+                                    <label onClick={() => localStorage.removeItem("del")} htmlFor="my_modal_6" className="btn">Close</label>
                                 </div>
                             </div>
                         </div>

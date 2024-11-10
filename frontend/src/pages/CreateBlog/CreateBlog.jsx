@@ -18,10 +18,10 @@ const CreateBlog = () => {
     const [subTitle, setSubTitle] = useState("");
     const [coverImg, setCoverImg] = useState("");
     const [coverUrl, setCoverUrl] = useState("");
-    let blog = "";
 
     useEffect(() => {
-        if(localStorage.length > 1){
+        const blog = localStorage.getItem("Blog");
+        if(blog){
             blog = localStorage.getItem("Blog");
             blog = JSON.parse(blog);
             setTitle(blog.title);
