@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const User = () => {
     const currentUser = JSON.parse(localStorage.getItem("User"));
+    if(!currentUser) return ;
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     const navigate = useNavigate();
 
