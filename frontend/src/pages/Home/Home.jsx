@@ -39,11 +39,10 @@ const Home = () => {
                     credentials: "include",
                 });
                 const data = await response.json();
-                if (data.success) {
+                if (data && data.success) {
                     const user = JSON.stringify(data.data);
                     localStorage.setItem("User", user);
                     console.log(JSON.parse(localStorage.getItem("User")));
-
                     console.log("fetched current user successfully ", data);
                 } else {
                     console.log("Current user not found", data);
