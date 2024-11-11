@@ -58,7 +58,7 @@ const Drafts = () => {
             <Navbar hideSearch={true}/>
             <div role="tablist" className="tabs mt-5 ml-5 tabs-bordered">
                 <input onClick={() => navigate("/drafts")} type="radio" name="my_tabs_1" role="tab" className="tab font-medium text-gray-300" aria-label="Drafts" defaultChecked/>
-                <div role="tabpanel" className="size-full tab-content mr-5 pr-3 mt-10">
+                <div role="tabpanel" className="size-full tab-content mr-5 pr-3 pb-20 sm:pb-0 mt-10">
                     {drafts.length > 0 ? 
                         drafts.map((draft) => (
                             <RecommendedBlog

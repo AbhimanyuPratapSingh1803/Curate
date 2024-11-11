@@ -10,6 +10,7 @@ import { RxCross1 } from "react-icons/rx";
 import Navbar from "../../components/Navbar";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -18,17 +19,19 @@ const CreateBlog = () => {
     const [subTitle, setSubTitle] = useState("");
     const [coverImg, setCoverImg] = useState("");
     const [coverUrl, setCoverUrl] = useState("");
+    const [blog, setBlog] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const blog = localStorage.getItem("Blog");
-        if(blog){
-            blog = localStorage.getItem("Blog");
-            blog = JSON.parse(blog);
-            setTitle(blog.title);
-            setSubTitle(blog.subTitle);
-            setCoverImg(blog.coverImage);
-            setCoverUrl(blog.coverImage);
-            setContent(blog.content)
+        let existingBlog = localStorage.getItem("Blog");
+        if(existingBlog){
+            existingBlog = JSON.parse(existingBlog);
+            setBlog(existingBlog);
+            setTitle(existingBlog.title);
+            setSubTitle(existingBlog.subTitle);
+            setCoverImg(existingBlog.coverImage);
+            setCoverUrl(existingBlog.coverImage);
+            setContent(existingBlog.content)
         }
     }, [])
 
@@ -135,7 +138,7 @@ const CreateBlog = () => {
                     },
                 },
                 placeholder: "Write your blog here...",
-                data : blog.content,
+                data : blog?.content,
                 onChange: async () => {
                     const outputData = await editorInstance.current.save();
                     setContent(outputData);
@@ -169,7 +172,7 @@ const CreateBlog = () => {
 
         try {
             let response = {};
-
+            console.log("blogid : ", blogId);
             if(blogId){
                 response = await fetch(`${BASE_URL}/blog/updateDraft`, {
                     method: "PUT",
@@ -196,6 +199,7 @@ const CreateBlog = () => {
                 console.log("Saved as draft successfully : ", data);
                 toast.success("Saved as draft Successfully");
                 localStorage.removeItem("Blog");
+                navigate('/');
             }
             else{
                 console.log("Error saving draft : ", data);
@@ -211,26 +215,49 @@ const CreateBlog = () => {
         const savedData = await editorInstance.current.save();
         console.log("Saved Data: ", savedData);
         setContent(savedData);
+        const blogId = blog?.id;
         const form = {
             coverImage: coverUrl,
             title: title,
             subTitle: subTitle,
             content: JSON.stringify(content),
+            blogId : blogId
         };
         console.log(form);
         try {
-            const response = await fetch(`${BASE_URL}/blog/publish`, {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(form),
-            });
+            let response = {};
+            console.log("blogid : ", blogId);
+            if (blogId) {
+                response = await fetch(`${BASE_URL}/blog/publishDraft`, {
+                    method: "PUT",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(form),
+                });
+            } else {
+                response = await fetch(`${BASE_URL}/blog/publish`, {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(form),
+                });
+            }
 
             const data = await response.json();
-            console.log("Blog saved successfully : ", data);
-            toast.success("Blog published Successfully");
+            if(data.success){
+                console.log("Blog saved successfully : ", data);
+                toast.success("Blog published Successfully");
+                localStorage.removeItem("Blog")
+                navigate('/');
+            }
+            else{
+                console.log("Error publishing the blog : ", data);
+                toast.error("Error publishing the blog");
+            }
         } catch (error) {
             console.log("Error publishing the blog : ", error);
             toast.error("Error publishing the blog");

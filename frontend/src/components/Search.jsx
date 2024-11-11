@@ -1,14 +1,16 @@
 import React, { useRef, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { getInitials } from "../utils/helper";
+import { Link, useNavigate } from "react-router-dom";
 
-const Search = ({ handleSearch }) => {
+const Search = () => {
     const [value, setValue] = useState("");
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     const [blogs, setBlogs] = useState([]);
     const [searching, setSearching] = useState(false);
     const [searched, setSearched] = useState(false);
     const keyUpTimer = useRef(null);
+    const navigate = useNavigate();
 
     const fetchRes = async () => {
         try {
@@ -84,7 +86,7 @@ const Search = ({ handleSearch }) => {
                                 onKeyUp={value !== "" ? keyUp : undefined}
                                 onChange={(e) => setValue(e.target.value)}
                                 placeholder="Start typing to search"
-                                className="outline-0 ring-1 backdrop-blur-xl bg-inherit ring-blue-600 placeholder-slate-500 w-full rounded-md px-4 py-1.5"
+                                className="outline-0 ring-1 mb-3 backdrop-blur-xl bg-inherit ring-blue-600 placeholder-slate-500 w-full rounded-md px-4 py-1.5"
                             />
                         </div>
                     </div>
@@ -114,7 +116,7 @@ const Search = ({ handleSearch }) => {
                             {blogs.map((blog) => (
                                     <div
                                     key={blog._id}
-                                    className="flex mt-5 sm:mt-0 flex-col sm:flex-row border-b-2 border-slate-700 w-11/12 items-center justify-center sm:justify-between gap-4 py-3">
+                                    className="flex mt-5 sm:mt-0 flex-col sm:flex-row border-b-2 border-slate-700 min-h-[150px] w-11/12 items-center justify-center sm:justify-between gap-4 py-3">
                                         <div className="w-full flex-col gap-4 justify-center items-start">
                                             <div className="flex items-center justify-start mb-3 gap-3">
                                                 <div className="avatar placeholder">
@@ -140,19 +142,25 @@ const Search = ({ handleSearch }) => {
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="h-fit w-full">
-                                                <p className="text-md sm:text-2xl cursor-pointer text-white font-semibold">
-                                                    {blog.title}
-                                                </p>
-                                            </div>
+                                            <Link to={`/blog/${blog._id}`}>
+                                                <div className="h-fit w-full">
+                                                    <p className="text-md sm:text-2xl cursor-pointer text-white font-semibold">
+                                                        {blog.title}
+                                                    </p>
+                                                </div>     
+                                            </Link>
                                         </div>
-                                        <div className="h-36 w-full sm:pt-7 sm:w-1/3">
-                                            <img
-                                                className="rounded-md"
-                                                src={blog.coverImage}
-                                                alt="Blog-cover"
-                                            />
-                                        </div>
+                                        {blog.coverImage ? (
+                                                <div className="h-36 w-full sm:pt-7 sm:w-1/3">
+                                                    <img
+                                                        className="rounded-md cursor-pointer"
+                                                        onClick={() => navigate(`/blog/${blog._id}`)}
+                                                        src={blog.coverImage}
+                                                        alt="Blog-cover"
+                                                    />
+                                                </div>
+                                            
+                                        ) : null}
                                     </div>
                                 
                             ))}

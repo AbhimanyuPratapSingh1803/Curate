@@ -78,7 +78,7 @@ const RecommendedBlog = ({
     let formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
 
     const handleNavigate = () => {
-        if(page !== "myblogsDrafts"){
+        if(page !== "myblogsDraft"){
             navigate(`blog/${id}`);
         }
         else{
@@ -92,6 +92,7 @@ const RecommendedBlog = ({
                 createdAt,
                 status,
             };
+            console.log(page)
             localStorage.setItem("Blog", JSON.stringify(blog));
             navigate("/create");
         }

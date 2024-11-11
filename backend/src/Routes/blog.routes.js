@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../Middlewares/auth.middleware.js";
 import {upload} from "../Middlewares/multer.middleware.js"
-import {uploadCoverImage, deleteImg, uploadBlogImage, publish, fetchAllBlogs, saveDraft, updateDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog, searchBlogs} from "../Controllers/blog.controller.js"
+import {uploadCoverImage, deleteImg, uploadBlogImage, publish, fetchAllBlogs, saveDraft, updateDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog, searchBlogs, publishDraft} from "../Controllers/blog.controller.js"
 
 const router = Router();
 
@@ -16,6 +16,8 @@ router.route("/publish").post(verifyJWT, publish);
 router.route("/draft").post(verifyJWT, saveDraft);
 
 router.route("/updateDraft").put(verifyJWT, updateDraft);
+
+router.route("/publishDraft").put(verifyJWT, publishDraft);
 
 router.route("/getAllBlogs").get(fetchAllBlogs);
 

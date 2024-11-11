@@ -107,6 +107,58 @@ const publish = asyncHandler(async (req, res) => {
     }
 });
 
+const publishDraft = asyncHandler(async (req, res) => {
+    const {coverImage, title, subTitle, content, blogId} = req.body;
+    if(!title || !content){
+        res.status(400).json({
+            success : false,
+            message : "Title, Cover image and Content are required"
+        });
+    }
+
+    console.log(req.user);
+    const userId = req.user._id;
+
+    const findBlog = await Blog.findById(blogId);
+    if(!findBlog){
+        res.status(400).json({
+            success : false,
+            message : `Error error finding draft to publish ${findBlog}`
+        })
+    }
+    const blog = await Blog.findByIdAndUpdate(blogId, {
+        coverImage,
+        title,
+        subTitle,
+        content,
+        author : userId,
+        status : "published",
+    }, {new : true, upsert : false});
+
+    if(!blog){
+        res.status(400).json({
+            success : false,
+            message : `Error publishing the blog ${blog}`
+        })
+    }
+
+    const createdBlog = await Blog.findById(blog._id).populate("author", ["fullName"]);
+    if(!createdBlog){
+        res.status(400).json({
+            success : false,
+            message : `Error publishing the draft ${createdBlog}`
+        })
+    }
+
+    if(createdBlog){
+        res.status(200).json({
+            success : true,
+            message : `Published draft successfully`,
+            data : createdBlog
+        })
+    }
+})
+
 const saveDraft = asyncHandler(async (req, res) => {
     const {coverImage, title, subTitle, content} = req.body;
     if(!title || !content){
@@ -124,6 +176,7 @@ const saveDraft = asyncHandler(async (req, res) => {
         subTitle,
         content,
         author : userId,
+        status : "draft",
     });
 
     const createdBlog = await Blog.findById(blog._id).populate("author", ["fullName"]);
@@ -154,26 +207,36 @@ const updateDraft = asyncHandler(async (req, res) => {
 
     console.log(req.user);
     const userId = req.user._id;
+
+    const findBlog = await Blog.findById(blogId);
+    if(!findBlog){
+        res.status(400).json({
+            success : false,
+            message : `Error error finding draft to update ${findBlog}`
+        })
+    }
+
     const blog = await Blog.findByIdAndUpdate(blogId, {
-        coverImage,
+        $set: {coverImage,
         title,
         subTitle,
         content,
-        author : userId,
-    }, {new : true});
+        status : "draft",
+        author : userId,}
+    }, {new : true, upsert : false});
 
     const createdBlog = await Blog.findById(blog._id).populate("author", ["fullName"]);
     if(!createdBlog){
         res.status(400).json({
             success : false,
-            message : `Error publishing the blog ${createdBlog}`
+            message : `Error saving the draft ${createdBlog}`
         })
     }
 
     if(createdBlog){
         res.status(200).json({
             success : true,
-            message : `Published blog successfully`,
+            message : `Saved draft successfully`,
             data : createdBlog
         })
     }
@@ -299,4 +362,4 @@ const searchBlogs = asyncHandler(async (req, res) => {
     })
 })
 
-export {uploadCoverImage, uploadBlogImage, deleteImg, publish, fetchAllBlogs, updateDraft, saveDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog, searchBlogs}
+export {uploadCoverImage, uploadBlogImage, deleteImg, publish, fetchAllBlogs, updateDraft, saveDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog, searchBlogs, publishDraft}
