@@ -16,14 +16,14 @@ function App() {
     const routes = (
         <Router>
             <Routes>
-                <Route path='/' exact element={<Home/>} />
-                <Route path='/signup' exact element={<Signup/>} />
-                <Route path='/login' exact element={<Login/>} />
-                <Route path='/create' exact element={<CreateBlog/>} />
-                <Route path='/drafts' exact element={<Drafts/>} />
-                <Route path='/published' exact element={<Published/>} />
-                <Route path='/blog/:id' exact element={<Blog/>} />
-                <Route path='published/blog/:id' exact element={<Blog/>} />
+                <Route path='/' element={<Home/>} />
+                <Route path='/signup' element={<Signup/>} />
+                <Route path='/login'  element={<Login/>} />
+                <Route path='/create' element={<CreateBlog/>} />
+                <Route path='/drafts' element={<Drafts/>} />
+                <Route path='/published' element={<Published/>} />
+                <Route path='/blog/:id' element={<Blog/>} />
+                <Route path='published/blog/:id' element={<Blog/>} />
             </Routes>
         </Router>
     );
