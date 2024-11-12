@@ -121,7 +121,7 @@ const Blog = () => {
                         <p>{formattedDate}</p>
                     </div>
 
-                    <div className='flex flex-col gap-8 min-h-screen items-center justify-center px-2 sm:px-28'>
+                    <div className='flex flex-col gap-8 min-h-screen items-center justify-start px-2 sm:px-28'>
                         {blocks.map((block) => (
                             <div key={block.id} className='w-full flex justify-start text-white'>
                                 {block.type === "paragraph" && <p className='text-lg'>{block.data.text}</p>}

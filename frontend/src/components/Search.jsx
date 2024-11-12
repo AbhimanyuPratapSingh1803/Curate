@@ -92,23 +92,23 @@ const Search = () => {
                     </div>
                     {searching ? (
                         <div className="w-11/12 pt-12">
-                            <div className="flex w-full gap-4 pt-5">
+                            <div className="flex flex-col sm:flex-row w-full gap-4 pt-5">
                                 <div className="w-full flex flex-col pt-2 gap-4">
                                     <div className="skeleton h-4 w-28"></div>
                                     <div className="skeleton h-4 w-full"></div>
                                     <div className="skeleton h-4 w-full"></div>
                                     <div className="skeleton h-4 w-full"></div>
                                 </div>
-                                <div className="skeleton h-32 w-full"></div>
+                                <div className="skeleton h-32 w-full sm:w-1/2"></div>
                             </div>
-                            <div className="flex w-full gap-4 pt-5">
+                            <div className="flex flex-col sm:flex-row w-full gap-4 pt-5">
                                 <div className="w-full flex flex-col pt-2 gap-4">
                                     <div className="skeleton h-4 w-28"></div>
                                     <div className="skeleton h-4 w-full"></div>
                                     <div className="skeleton h-4 w-full"></div>
                                     <div className="skeleton h-4 w-full"></div>
                                 </div>
-                                <div className="skeleton h-32 w-full"></div>
+                                <div className="skeleton h-32 w-full sm:w-1/2"></div>
                             </div>
                         </div>
                     ) : (
@@ -116,7 +116,7 @@ const Search = () => {
                             {blogs.map((blog) => (
                                     <div
                                     key={blog._id}
-                                    className="flex mt-5 sm:mt-0 flex-col sm:flex-row border-b-2 border-slate-700 min-h-[150px] w-11/12 items-center justify-center sm:justify-between gap-4 py-3">
+                                    className="flex mt-5 sm:mt-0 flex-col sm:flex-row border-b-2 border-slate-700 min-h-[100px] w-11/12 items-center justify-center sm:justify-between gap-4 py-3">
                                         <div className="w-full flex-col gap-4 justify-center items-start">
                                             <div className="flex items-center justify-start mb-3 gap-3">
                                                 <div className="avatar placeholder">
