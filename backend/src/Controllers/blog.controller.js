@@ -6,51 +6,33 @@ import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 import { ObjectId } from 'mongodb';
 
-// mongoose.set("debug", true);
-
 const uploadCoverImage = asyncHandler(async (req, res) => {
-    const coverImageLocalPath = req.file?.path;
-    if(!coverImageLocalPath){
-        return res.status(400).json({
+    const imageUrl = req.file?.path;
+    if(!imageUrl){
+        res.status(400).json({
             success : false,
-            message : "Cover Image file not found."
-        })
-    }
-    
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-    if(!coverImage){
-        return res.status(400).json({
-            success : false,
-            message : "Couldn't upload Cover Image on Cloudinary."
+            message : "Error uploading file on Cloudinary",
         })
     }
 
     return res.status(200).json({
         success : true,
-        url : coverImage.url,
+        url : imageUrl,
     })
 });
 
 const uploadBlogImage = asyncHandler(async (req, res) => {
-    const imageLocalPath = req.file?.path;
-    if(!imageLocalPath){
-        return res.status(400).json({
+    const imageUrl = req.file?.path;
+    if(!imageUrl){
+        res.status(400).json({
             success : false,
-            message : "Image file not found."
-        })
-    }
-    
-    const image = await uploadOnCloudinary(imageLocalPath);
-    if(!image){
-        return res.status(400).json({
-            success : false,
-            message : "Couldn't upload Image on Cloudinary."
+            message : "Error uploading file on Cloudinary",
         })
     }
 
     return res.status(200).json({
         success : true,
-        url : image.url,
+        url : imageUrl,
     })
 });
 

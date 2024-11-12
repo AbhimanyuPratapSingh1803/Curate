@@ -45,6 +45,7 @@ const CreateBlog = () => {
     };
 
     const handleCoverImg = async () => {
+        console.log(coverImg);
         const data = new FormData();
         data.append("cover-img", coverImg[0]);
         try {
