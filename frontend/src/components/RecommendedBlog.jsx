@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import {useSelector, useDispatch} from "react-redux"
 import {setDeletedBlog} from "../utils/userSlice"
 import { Link, useNavigate } from "react-router-dom";
+import Aos from "aos"
+import "aos/dist/aos.css"
 
 const RecommendedBlog = ({
     id,
@@ -25,6 +27,9 @@ const RecommendedBlog = ({
     const [del, setDel] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    useEffect(() => {
+        Aos.init();
+    }, []);
 
     const handleDelete = async (newblogId) => {
         const blogId = { _id : newblogId };
@@ -99,7 +104,7 @@ const RecommendedBlog = ({
     }
 
     return (
-        <div className="flex flex-col xl:max-h-[325px] rounded-xl w-[90%] sm:w-3/5 px-6 my-6 mx-auto border-[0.1px] bg-slate-950 border-slate-100 border-opacity-30">
+        <div data-aos="fade-down" data-aos-offset="100" data-aos-easing="ease-in-out-sine" data-aos-duration="1000" className="flex flex-col xl:max-h-[325px] rounded-xl w-[90%] sm:w-3/5 px-6 my-6 mx-auto border-[0.1px] bg-slate-950 border-slate-100 border-opacity-30">
             <div className="w-full flex justify-between items-center">
                 <div className="flex flex-start  gap-4 items-center justify-start mt-5 mb-4">
                     <div className="avatar placeholder">

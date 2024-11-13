@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { TfiInfinite } from "react-icons/tfi";
 import { Link } from "react-router-dom";
+import Aos from "aos"
+import "aos/dist/aos.css"
 
 const Footer = () => {
+    useEffect(() => {
+        Aos.init();
+    }, []);
+
     return (
         <footer className="footer flex flex-col sm:flex-row sm:justify-between bg-slate-900 text-white gap-6 items-center p-4">
             <aside className="flex flex-col sm:flex-row gap-2 sm:gap-5 justify-center sm:justify-between items-center">

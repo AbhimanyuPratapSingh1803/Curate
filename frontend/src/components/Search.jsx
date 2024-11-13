@@ -64,11 +64,11 @@ const Search = () => {
     return (
         <div className="w-full">
             <button
-                className="btn btn-circle bg-neutral"
+                className="btn btn-circle bg-blue-600 hover:bg-blue-800"
                 onClick={() =>
                     document.getElementById("my_modal_3").showModal()
                 }>
-                <IoSearch className="text-xl" />
+                <IoSearch className="text-xl text-white font-extrabold" />
             </button>
             <dialog id="my_modal_3" className="modal">
                 <div className="modal-box w-11/12 min-h-[100px] max-h-[600px] sm:w-3/4 max-w-4xl flex items-center gap-4 justify-center flex-col bg-slate-950">

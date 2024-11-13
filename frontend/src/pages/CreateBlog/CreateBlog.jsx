@@ -19,6 +19,7 @@ const CreateBlog = () => {
     const [subTitle, setSubTitle] = useState("");
     const [coverImg, setCoverImg] = useState("");
     const [coverUrl, setCoverUrl] = useState("");
+    const [uploading, setUploading] = useState(false);
     const [blog, setBlog] = useState({});
     const navigate = useNavigate();
 
@@ -46,6 +47,7 @@ const CreateBlog = () => {
 
     const handleCoverImg = async () => {
         console.log(coverImg);
+        setUploading(true);
         const data = new FormData();
         data.append("cover-img", coverImg[0]);
         try {
@@ -58,8 +60,11 @@ const CreateBlog = () => {
             if (response.ok) {
                 setCoverUrl(res.url);
                 console.log("Cover image uploaded successfully", res);
+                setUploading(false);
             } else {
                 console.log("Failed to upload Cover image", res);
+                setUploading(false);
+                toast.error("Failed to upload Cover image");
             }
         } catch (error) {
             console.error("Error : ", error);
@@ -273,7 +278,7 @@ const CreateBlog = () => {
             />
             <div className="my-10 min-h-screen w-11/12 sm:w-9/12 mx-auto flex flex-col gap-5">
                 {coverUrl != "" ? (
-                    <div className="relative w-fit">
+                    <div className="relative object-cover w-fit">
                         <div
                             onClick={removeCoverImg}
                             className="absolute cursor-pointer right-0 m-2 sm:m-5 rounded-xl p-1 sm:p-5 top-0 z-40 bg-slate-600">
@@ -285,8 +290,8 @@ const CreateBlog = () => {
                             className="-z-40 rounded-md"
                         />
                     </div>
-                ) : (
-                    <div className="flex cursor-pointer gap-3 items-center bg-blue-500 hover:bg-blue-600 transition-colors rounded-lg px-3 py-2 w-fit justify-center">
+                ) : 
+                    (!uploading ? <div className="flex cursor-pointer gap-3 items-center bg-blue-500 hover:bg-blue-600 transition-colors rounded-lg px-3 py-2 w-fit justify-center">
                         <FaImage className="text-white text-xl" />
                         <input
                             onChange={(e) => setCoverImg(e.target.files)}
@@ -299,8 +304,14 @@ const CreateBlog = () => {
                         {coverImg ? (
                             <button onClick={handleCoverImg}>Upload</button>
                         ) : null}
-                    </div>
-                )}
+                        
+                    </div> : 
+                        (<div className="flex gap-4 items-center justify-start ">
+                            <p className="text-xl font-semibold">Uploading...</p>
+                            <span className="loading loading-spinner text-info"></span>
+                        </div>)
+                    )
+                }
                 <div>
                     {/* Title field */}
                     <input
@@ -328,6 +339,9 @@ const CreateBlog = () => {
                         ref={editorContainer}
                         className="bg-slate-800 w-full px-7 py-4 min-h-[500px] rounded-xl"
                     />
+                </div>
+                <div>
+                    
                 </div>
                 <button
                     onClick={onDraft}
