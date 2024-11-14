@@ -24,6 +24,10 @@ const userSchema = new Schema({
     refreshToken : {
         type : String,
     },
+    bookmarks : [{
+        type : Schema.Types.ObjectId,
+        ref : "Blog",
+    }],
 },
 {
     timestamps : true,

@@ -117,7 +117,7 @@ const Signup = () => {
                     <div class=" fixed right-0 z-20 hidden h-full w-1/2 md:block">
                         <img
                             class="max-h-screen h-full w-full object-cover"
-                            src="./src/assets/signup.jpg"
+                            src="https://res.cloudinary.com/dq3linqhb/image/upload/v1731602990/signup_jn5dru.jpg"
                             alt="register_image"
                         />
                     </div>

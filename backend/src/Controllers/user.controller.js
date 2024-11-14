@@ -2,6 +2,7 @@ import { asyncHandler } from "../Utils/AsyncHandler.js";
 import {ApiError} from "../Utils/ApiError.js"
 import { User } from "../Models/user.model.js"
 import {uploadOnCloudinary} from "../Utils/cloudinary.js"
+import {Blog} from "../Models/blog.model.js"
 import { ApiResponse } from "../Utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
@@ -204,4 +205,122 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 })
 
-export {registerUser, loginUser, logoutUser, getCurrentUser, refreshAccessToken};
+const addBookmark = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const blogId = req.body.id;
+
+    if(!blogId){
+        res.status(400).json({
+            success : false,
+            message : "Blog id is required"
+        });
+    }
+
+    const blog = await Blog.findById(blogId);
+    if(!blog){
+        res.status(400).json({
+            success : false,
+            message : "Specified blog doesn't exists"
+        });
+    }
+
+    const user = await User.findById(userId);
+    {user && user.bookmarks.push(blogId);}
+
+    await user.save();
+
+    res.status(200).json({
+        success : true,
+        data : {user : user, bookmarks : user.bookmarks},
+        message : "Blog added to bookmarks successfully!"
+    })
+})
+
+const fetchBookmarks = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+
+    const blogIds = user.bookmarks;
+
+    try {
+        // Use Promise.all to handle asynchronous operations
+        const bookmarks = await Promise.all(
+            blogIds.map(async (blogId) => {
+                const blog = await Blog.findById(blogId).populate("author", ["fullName"]);
+                return blog; // Return the blog if found
+            })
+        );
+
+        // Filter out any null values (in case some blogs were not found)
+        const validBookmarks = bookmarks.filter(blog => blog !== null);
+
+        res.status(200).json({
+            success: true,
+            data: { bookmarks: validBookmarks },
+            message: "Bookmarks fetched successfully!"
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({
+            success: false,
+            message: "Can't find the specified bookmarks!"
+        });
+    }
+});
+
+const removeBookmark = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const blogId = req.body.id;
+
+    if(!blogId){
+        res.status(400).json({
+            success : false,
+            message : "Blog id is required"
+        });
+    }
+
+    const user = await User.findById(userId);
+    const filteredBookmarks = user.bookmarks.filter(item => item !== blogId);
+
+    user.bookmarks = filteredBookmarks;
+    await user.save();
+
+    res.status(200).json({
+        success : true,
+        data : {bookmarks : user.bookmarks},
+        message : "Bookmark removed successfully!"
+    })
+})
+
+const isBookmarked = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const blogId = req.body.id;
+
+    if(!blogId){
+        res.status(400).json({
+            success : false,
+            message : "Blog id is required"
+        });
+    }
+
+    const user = await User.findById(userId);
+    const bookmark = user.bookmarks.includes(blogId);
+
+    if(bookmark){
+        res.status(200).json({
+            success : true,
+            data : true,
+            message : "Blog is bookmarked!"
+        });
+    }
+
+    else{
+        res.status(200).json({
+            success : true,
+            data : false,
+            message : "Blog is not bookmarked!"
+        });
+    }
+})
+
+export {registerUser, loginUser, logoutUser, getCurrentUser, refreshAccessToken, addBookmark, fetchBookmarks, removeBookmark, isBookmarked};

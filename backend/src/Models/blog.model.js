@@ -28,10 +28,6 @@ const blogSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref : "Comment",
     },
-    isBookmarked : {
-        type : Boolean,
-        default : false,
-    },
     status : {
         type : String,
         enum : ["draft", "published"],

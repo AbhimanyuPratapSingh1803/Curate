@@ -10,6 +10,7 @@ import CreateBlog from './pages/CreateBlog/CreateBlog'
 import Drafts from './pages/Drafts/Drafts'
 import Blog from './pages/BlogPage/Blog'
 import Published from './pages/Published/Published'
+import Bookmark from './pages/Bookmark/Bookmark'
 
 function App() {
 
@@ -21,9 +22,11 @@ function App() {
                 <Route path='/login'  element={<Login/>} />
                 <Route path='/create' element={<CreateBlog/>} />
                 <Route path='/drafts' element={<Drafts/>} />
+                <Route path='/bookmarks' element={<Bookmark/>} />
                 <Route path='/published' element={<Published/>} />
                 <Route path='/blog/:id' element={<Blog/>} />
                 <Route path='published/blog/:id' element={<Blog/>} />
+                <Route path='bookmarks/blog/:id' element={<Blog/>} />
             </Routes>
         </Router>
     );

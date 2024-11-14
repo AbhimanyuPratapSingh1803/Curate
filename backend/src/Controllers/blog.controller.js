@@ -344,4 +344,9 @@ const searchBlogs = asyncHandler(async (req, res) => {
     })
 })
 
+const addBookmark = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    // const blogId = 
+})
+
 export {uploadCoverImage, uploadBlogImage, deleteImg, publish, fetchAllBlogs, updateDraft, saveDraft, fetchDrafts, deleteBlog, fetchPublished, fetchBlog, searchBlogs, publishDraft}

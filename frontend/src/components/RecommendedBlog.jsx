@@ -7,6 +7,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { getInitials } from "../utils/helper";
 import { toast } from "react-toastify";
 import {useSelector, useDispatch} from "react-redux"
+import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import {setDeletedBlog} from "../utils/userSlice"
 import { Link, useNavigate } from "react-router-dom";
 import Aos from "aos"
@@ -24,12 +25,98 @@ const RecommendedBlog = ({
     page
 }) => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    const [del, setDel] = useState("");
+    const [isBookmarked, setIsBookmarked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
         Aos.init();
     }, []);
+
+    const removeBookmark = async () => {
+        const blogId = {id : id};
+        try {
+            const response = await fetch(`${BASE_URL}/users/removeBookmark`, {
+                method : "POST",
+                credentials : "include",
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                body : JSON.stringify(blogId)
+            });
+    
+            const data = await response.json();
+            if(data.success){
+                console.log("Blog removed from bookmarks successfully : ", data);
+                setIsBookmarked(false);
+            }
+            else{
+                console.log("Error removing from bookmarks : ", data);
+                toast.error("Error removing from bookmarks!");
+            }
+        } catch (error) {
+            console.log("Error removing from bookmarks : ", error);
+            toast.error("Error removing from bookmarks!");
+        }
+    }
+
+    const addBookmark = async () => {
+        const blogId = {id : id};
+        try {
+            const response = await fetch(`${BASE_URL}/users/add-bookmark`, {
+                method : "POST",
+                credentials : "include",
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                body : JSON.stringify(blogId)
+            });
+    
+            const data = await response.json();
+            if(data.success){
+                console.log("Blog bookmarked successfully : ", data);
+                setIsBookmarked(true);
+            }
+            else{
+                console.log("Error bookmarking the blog : ", data);
+                toast.error("Error bookmarking the blog!");
+            }
+        } catch (error) {
+            console.log("Error bookmarking the blog : ", error);
+            toast.error("Error bookmarking the blog!");
+        }
+    }
+
+    useEffect(() => {
+        const bookmarked = async () => {
+            const blogId = {id : id};
+            try {
+                const response = await fetch(`${BASE_URL}/users/isBookmarked`, {
+                    method : "POST",
+                    credentials : "include",
+                    headers : {
+                        "Content-type" : "application/json"
+                    },
+                    body : JSON.stringify(blogId)
+                });
+        
+                const data = await response.json();
+                if(data.success){
+                    console.log("Fetched isBookmarked successfully : ", data);
+                    if(data.data) setIsBookmarked(true);
+                    else setIsBookmarked(false);
+                }
+                else{
+                    console.log("Error fetching isBookmarked : ", data);
+                    toast.error("Error fetching isBookmarked");
+                }
+            } catch (error) {
+                console.log("Error fetching isBookmarked : ", error);
+                toast.error("Error fetching isBookmarked!");
+            }
+        }
+
+        bookmarked();
+    }, [removeBookmark, addBookmark]);
 
     const handleDelete = async (newblogId) => {
         const blogId = { _id : newblogId };
@@ -173,7 +260,7 @@ const RecommendedBlog = ({
                         Node.js
                     </div>
                     <p className="hidden sm:block text-slate-500">|</p>
-                    <IoBookmarks className="text-lg" />
+                    {!isBookmarked ? <IoBookmarks onClick={addBookmark} className="text-lg" /> : <BsFillBookmarkCheckFill className="text-lg" onClick={removeBookmark} />}
                 </div>
             </div> : null}
         </div>

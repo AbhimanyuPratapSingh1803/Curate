@@ -114,7 +114,7 @@ const Login = () => {
                     <div class="fixed right-0 z-20 hidden h-screen w-1/2 md:block">
                         <img
                             class="h-full w-full object-cover"
-                            src="./src/assets/login.jpg"
+                            src="https://res.cloudinary.com/dq3linqhb/image/upload/v1731602990/login_ey2mvd.jpg"
                             alt="register_image"
                         />
                     </div>

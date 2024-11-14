@@ -67,7 +67,7 @@ const User = () => {
                     </li>
                     <div className="divider my-0"></div>
                     <li>
-                        <div className="flex gap-4 items-center justify-start">
+                        <div onClick={() => navigate("/bookmarks")} className="flex gap-4 items-center justify-start">
                             <IoBookmarks className="text-lg" />
                             <p>Bookmarks</p>
                         </div>
