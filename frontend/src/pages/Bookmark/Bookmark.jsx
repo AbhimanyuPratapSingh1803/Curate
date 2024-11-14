@@ -37,12 +37,12 @@ const Bookmark = () => {
         <div className='bg-slate-950 relative min-h-screen pb-20 sm:pb-20 pt-28 w-screen'>
             <Navbar />
             <div className='flex flex-col justify-start items-center w-full'>
-                <div className='flex border rounded-xl px-5 border-slate-500 w-3/5 items-center mb-4 justify-between'>
+                <div className='flex border rounded-xl px-5 border-slate-500 w-[90%] sm:w-3/5 items-center mb-4 justify-between'>
                     <div className='py-8'>
-                        <p className='text-3xl font-bold text-white'>Bookmarks</p>
-                        <p className='text-slate-500 text-lg'>All blogs you have bookmarked on Curate!!</p>
+                        <p className='text-2xl sm:text-3xl font-bold text-white'>Bookmarks</p>
+                        <p className='text-slate-500 text-md sm:text-lg'>All blogs you have bookmarked on Curate!!</p>
                     </div>
-                    <div className='size-24 rouded-lg object-cover overflow-x-hidden overflow-y-hidden'>
+                    <div className='size-20 pt-3 sm:pt-0 sm:size-24 rouded-lg object-cover overflow-x-hidden overflow-y-hidden'>
                         <img className='rounded-lg' src="https://res.cloudinary.com/dq3linqhb/image/upload/v1731603101/Bookmark_s62e6t.jpg" alt="" />
                     </div>
                 </div>
