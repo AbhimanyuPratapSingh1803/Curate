@@ -75,7 +75,7 @@ const Drafts = () => {
                             />
                         )) : 
                         <div className="mt-10 px-auto pr-2">
-                            <p className="text-white text-2xl font-semibold">You haven't created any drafts yet!!</p>
+                            <p className="text-white text-center text-2xl font-semibold">You haven't created any drafts yet!!</p>
                         </div>
                     }
                 </div>
