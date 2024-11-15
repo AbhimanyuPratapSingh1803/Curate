@@ -6,12 +6,12 @@ import { IoBookmarks } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { getInitials } from "../utils/helper";
 import { toast } from "react-toastify";
-import {useSelector, useDispatch} from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
-import {setDeletedBlog} from "../utils/userSlice"
+import { setDeletedBlog } from "../utils/userSlice";
 import { Link, useNavigate } from "react-router-dom";
-import Aos from "aos"
-import "aos/dist/aos.css"
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const RecommendedBlog = ({
     id,
@@ -22,7 +22,7 @@ const RecommendedBlog = ({
     content,
     createdAt,
     status,
-    page
+    page,
 }) => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     const [isBookmarked, setIsBookmarked] = useState(false);
@@ -33,23 +33,25 @@ const RecommendedBlog = ({
     }, []);
 
     const removeBookmark = async () => {
-        const blogId = {id : id};
+        const blogId = { id: id };
         try {
             const response = await fetch(`${BASE_URL}/users/removeBookmark`, {
-                method : "POST",
-                credentials : "include",
-                headers : {
-                    "Content-type" : "application/json"
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/json",
                 },
-                body : JSON.stringify(blogId)
+                body: JSON.stringify(blogId),
             });
-    
+
             const data = await response.json();
-            if(data.success){
-                console.log("Blog removed from bookmarks successfully : ", data);
+            if (data.success) {
+                console.log(
+                    "Blog removed from bookmarks successfully : ",
+                    data
+                );
                 setIsBookmarked(false);
-            }
-            else{
+            } else {
                 console.log("Error removing from bookmarks : ", data);
                 toast.error("Error removing from bookmarks!");
             }
@@ -57,26 +59,25 @@ const RecommendedBlog = ({
             console.log("Error removing from bookmarks : ", error);
             toast.error("Error removing from bookmarks!");
         }
-    }
+    };
 
     const addBookmark = async () => {
-        const blogId = {id : id};
+        const blogId = { id: id };
         try {
             const response = await fetch(`${BASE_URL}/users/add-bookmark`, {
-                method : "POST",
-                credentials : "include",
-                headers : {
-                    "Content-type" : "application/json"
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/json",
                 },
-                body : JSON.stringify(blogId)
+                body: JSON.stringify(blogId),
             });
-    
+
             const data = await response.json();
-            if(data.success){
+            if (data.success) {
                 console.log("Blog bookmarked successfully : ", data);
                 setIsBookmarked(true);
-            }
-            else{
+            } else {
                 console.log("Error bookmarking the blog : ", data);
                 toast.error("Error bookmarking the blog!");
             }
@@ -84,28 +85,27 @@ const RecommendedBlog = ({
             console.log("Error bookmarking the blog : ", error);
             toast.error("Error bookmarking the blog!");
         }
-    }
+    };
 
     useEffect(() => {
         const bookmarked = async () => {
-            const blogId = {id : id};
+            const blogId = { id: id };
             try {
                 const response = await fetch(`${BASE_URL}/users/isBookmarked`, {
-                    method : "POST",
-                    credentials : "include",
-                    headers : {
-                        "Content-type" : "application/json"
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-type": "application/json",
                     },
-                    body : JSON.stringify(blogId)
+                    body: JSON.stringify(blogId),
                 });
-        
+
                 const data = await response.json();
-                if(data.success){
+                if (data.success) {
                     console.log("Fetched isBookmarked successfully : ", data);
-                    if(data.data) setIsBookmarked(true);
+                    if (data.data) setIsBookmarked(true);
                     else setIsBookmarked(false);
-                }
-                else{
+                } else {
                     console.log("Error fetching isBookmarked : ", data);
                     toast.error("Error fetching isBookmarked");
                 }
@@ -113,26 +113,26 @@ const RecommendedBlog = ({
                 console.log("Error fetching isBookmarked : ", error);
                 toast.error("Error fetching isBookmarked!");
             }
-        }
+        };
 
         bookmarked();
-    }, [removeBookmark, addBookmark]);
+    }, []);
 
     const handleDelete = async (newblogId) => {
-        const blogId = { _id : newblogId };
+        const blogId = { _id: newblogId };
         console.log(blogId);
         try {
             const response = await fetch(`${BASE_URL}/blog/delete-blog`, {
-                method : "POST",
-                credentials : "include",
-                headers : {
-                    "Content-type" : "application/json"
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/json",
                 },
-                body : JSON.stringify(blogId)
+                body: JSON.stringify(blogId),
             });
 
             const data = await response.json();
-            if(data.success){
+            if (data.success) {
                 console.log("Blog deleted successfully : ", data);
                 toast.success("Blog deleted successfully");
                 dispatch(setDeletedBlog());
@@ -140,9 +140,9 @@ const RecommendedBlog = ({
             }
         } catch (error) {
             console.log("Error deleting the blog : ", error);
-            toast.error("Error deleting the blog!")
+            toast.error("Error deleting the blog!");
         }
-    }
+    };
 
     const initials = getInitials(author.fullName);
 
@@ -170,10 +170,9 @@ const RecommendedBlog = ({
     let formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
 
     const handleNavigate = () => {
-        if(page !== "myblogsDraft"){
+        if (page !== "myblogsDraft") {
             navigate(`blog/${id}`);
-        }
-        else{
+        } else {
             const blog = {
                 id,
                 coverImage,
@@ -184,14 +183,19 @@ const RecommendedBlog = ({
                 createdAt,
                 status,
             };
-            console.log(page)
+            console.log(page);
             localStorage.setItem("Blog", JSON.stringify(blog));
             navigate("/create");
         }
-    }
+    };
 
     return (
-        <div data-aos="fade-down" data-aos-offset="100" data-aos-easing="ease-in-out-sine" data-aos-duration="1000" className="flex flex-col xl:max-h-[325px] rounded-xl w-[90%] sm:w-3/5 px-6 my-6 mx-auto border-[0.1px] bg-slate-950 border-slate-100 border-opacity-30">
+        <div
+            data-aos="fade-down"
+            data-aos-offset="100"
+            data-aos-easing="ease-in-out-sine"
+            data-aos-duration="1000"
+            className="flex flex-col xl:max-h-[325px] rounded-xl w-[90%] sm:w-3/5 px-6 my-6 mx-auto border-[0.1px] bg-slate-950 border-slate-100 border-opacity-30">
             <div className="w-full flex justify-between items-center">
                 <div className="flex flex-start  gap-4 items-center justify-start mt-5 mb-4">
                     <div className="avatar placeholder">
@@ -206,63 +210,103 @@ const RecommendedBlog = ({
                         <p className="text-sm">{formattedDate}</p>
                     </div>
                 </div>
-                {page === `myblogsDraft` || page === `myblogsPublished` ? 
+                {page === `myblogsDraft` || page === `myblogsPublished` ? (
                     <div>
                         {/* The button to open modal */}
-                        <label onClick={() => localStorage.setItem("del", id)} htmlFor="my_modal_6" className="btn"><RiDeleteBin6Line className="text-lg"/></label>
+                        <label
+                            onClick={() => localStorage.setItem("del", id)}
+                            htmlFor="my_modal_6"
+                            className="btn">
+                            <RiDeleteBin6Line className="text-lg" />
+                        </label>
 
                         {/* Put this part before </body> tag */}
-                        <input type="checkbox" id="my_modal_6" className="modal-toggle modal-backdrop" />
+                        <input
+                            type="checkbox"
+                            id="my_modal_6"
+                            className="modal-toggle modal-backdrop"
+                        />
                         <div className="modal" role="dialog">
                             <div className="modal-box">
-                                <h3 className="text-lg text-gray-300 font-bold">Alert!</h3>
-                                <p className="py-4">Are you sure you want to delete this blog!</p>
+                                <h3 className="text-lg text-gray-300 font-bold">
+                                    Alert!
+                                </h3>
+                                <p className="py-4">
+                                    Are you sure you want to delete this blog!
+                                </p>
                                 <div className="modal-action">
-                                    <label onClick={() => handleDelete(localStorage.getItem("del"))} htmlFor="my_modal_6" className="btn btn-error">Delete</label>
-                                    <label onClick={() => localStorage.removeItem("del")} htmlFor="my_modal_6" className="btn">Close</label>
+                                    <label
+                                        onClick={() =>
+                                            handleDelete(
+                                                localStorage.getItem("del")
+                                            )
+                                        }
+                                        htmlFor="my_modal_6"
+                                        className="btn btn-error">
+                                        Delete
+                                    </label>
+                                    <label
+                                        onClick={() =>
+                                            localStorage.removeItem("del")
+                                        }
+                                        htmlFor="my_modal_6"
+                                        className="btn">
+                                        Close
+                                    </label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        :
-                    null
-                }
+                ) : null}
             </div>
             <div className="flex  flex-col lg:flex-row gap-8 justify-start xl:justify-between items-center mb-5">
                 <div className="flex flex-col h-full w-full items-start justify-center gap-2">
-                    <p onClick={handleNavigate} className="text-xl sm:text-2xl cursor-pointer text-white font-bold">{title}</p>
+                    <p
+                        onClick={handleNavigate}
+                        className="text-xl sm:text-2xl cursor-pointer text-white font-bold">
+                        {title}
+                    </p>
                     <p className="text-slate-400 text-[13px] sm:text-base">
                         {para}
                     </p>
                 </div>
-                {coverImage ? <div className="w-full box-border xl:w-2/4">
-                    <img
-                        className="rounded-md"
-                        src={coverImage}
-                        alt="Blog Image"
-                        onClick={handleNavigate}
-                    />
-                </div> : null}
+                {coverImage ? (
+                    <div className="w-full box-border xl:w-2/4">
+                        <img
+                            className="rounded-md"
+                            src={coverImage}
+                            alt="Blog Image"
+                            onClick={handleNavigate}
+                        />
+                    </div>
+                ) : null}
             </div>
-            {status !== "draft" ? <div className="flex  items-center justify-between mb-5">
-                <div className="flex justify-center items-center gap-5">
-                    <div className="flex gap-1 items-center justify-center">
-                        <MdChat />
-                        <p>Comments</p>
+            {status !== "draft" ? (
+                <div className="flex  items-center justify-between mb-5">
+                    <div className="flex justify-center items-center gap-5">
+                        <div className="flex cursor-pointer gap-1 items-center justify-center">
+                            <p>Likes</p>
+                            <AiTwotoneLike />
+                            <p>50</p>
+                        </div>
                     </div>
-                    <div className="flex gap-1 items-center justify-center">
-                        <AiTwotoneLike />
-                        <p>50</p>
+                    <div className="flex justify-center items-center gap-3">
+                        {!isBookmarked ? (
+                            <div className="text-lg cursor-pointer tooltip tooltip-bottom tooltip-info" data-tip="Add to Bookmarks">
+                                <IoBookmarks
+                                    onClick={addBookmark}
+                                />
+                            </div>
+                        ) : (
+                            <div className="text-lg cursor-pointer tooltip tooltip-bottom tooltip-warning" data-tip="Remove from Bookmarks">
+                                <BsFillBookmarkCheckFill
+                                    onClick={removeBookmark}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
-                <div className="flex justify-center items-center gap-3">
-                    <div className="hidden sm:block rounded-full font-medium p-[6px] bg-slate-700">
-                        Node.js
-                    </div>
-                    <p className="hidden sm:block text-slate-500">|</p>
-                    {!isBookmarked ? <IoBookmarks onClick={addBookmark} className="text-lg" /> : <BsFillBookmarkCheckFill className="text-lg" onClick={removeBookmark} />}
-                </div>
-            </div> : null}
+            ) : null}
         </div>
     );
 };

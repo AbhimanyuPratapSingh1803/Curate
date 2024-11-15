@@ -3,10 +3,12 @@ import Navbar from '../../components/Navbar'
 import Skeleton from '../../components/Skeleton';
 import RecommendedBlog from '../../components/RecommendedBlog'
 import {toast} from "react-toastify"
+import Footer from '../../components/Footer';
 
 const Bookmark = () => {
     const [blogs, setBlogs] = useState([]);
     const BASE_URL = import.meta.env.VITE_BASE_URL;
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const getBookmarks = async () => {
@@ -20,6 +22,7 @@ const Bookmark = () => {
                 if(data.success){
                     console.log("fetched all the bookmarks successfully : ", data.data);
                     setBlogs(data.data.bookmarks);
+                    setLoading(false);
                 }
                 else{
                     console.log("error while fetching the bookmarks : ", data.data);
@@ -47,9 +50,9 @@ const Bookmark = () => {
                     </div>
                 </div>
 
-                {blogs.length === 0 ? <Skeleton /> : (
-                    <div className="w-full h-full mb-28 sm:mb-4">
-                        {blogs.map((blog) => (
+                {loading ? <Skeleton /> : (
+                    <div className="w-full flex flex-col justify-center items-center h-full mb-28 sm:mb-4">
+                        {blogs.length > 0 ?  blogs.map((blog) => (
                             <RecommendedBlog 
                                 key={blog._id}
                                 id={blog._id}
@@ -61,9 +64,12 @@ const Bookmark = () => {
                                 createdAt={blog.createdAt}
                                 page={"bookmarks"}
                             />
-                        ))}
+                        )) : <p className='pt-20 font-bold px-6 text-2xl'>Bookmark blogs to see them here!!👋</p>}
                     </div>
                 )}
+            </div>
+            <div className="bottom-0 mt-4 absolute w-full">
+                <Footer/>
             </div>
         </div>
     )

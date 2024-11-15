@@ -280,14 +280,14 @@ const removeBookmark = asyncHandler(async (req, res) => {
     }
 
     const user = await User.findById(userId);
-    const filteredBookmarks = user.bookmarks.filter(item => item !== blogId);
+    const filteredBookmarks = user.bookmarks.filter((item) => item.toString() !== blogId.toString());
 
     user.bookmarks = filteredBookmarks;
     await user.save();
 
     res.status(200).json({
         success : true,
-        data : {bookmarks : user.bookmarks},
+        data : {bookmarks : user.bookmarks, filter : filteredBookmarks, blog : blogId},
         message : "Bookmark removed successfully!"
     })
 })

@@ -34,7 +34,7 @@ const Navbar = ({ hideSearch = false, hideCreate = false }) => {
                             <HiMiniPencilSquare className="text-xl font-semibold" />
                             <p className="text-base">Write</p>
                         </button> */}
-                        <button className="btn btn-circle hover:bg-blue-800 bg-blue-600">
+                        <button className="btn btn-circle btn-md hover:bg-blue-800 bg-blue-600">
                             <HiMiniPencilSquare className="text-xl font-semibold text-white" />
                         </button>
                     </Link>
