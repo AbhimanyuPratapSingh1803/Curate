@@ -111,12 +111,12 @@ const logoutUser = asyncHandler(async (req, res) => {
     // so we made a middleware which axtracts the current user from the cookies
     // and then delete the cookies
     // and remove refresh token from the user's database
-    await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         // .user._id obtained from middleware
         // removing refresh token
         req.user._id,
         {
-            $unset : {refreshtoken : 1}
+            $unset : {refreshToken : 1}
         },
         {
             new : true
@@ -133,7 +133,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
     .json(
-        new ApiResponse(200, {}, "User logged Out Successfully")
+        new ApiResponse(200, {user}, "User logged Out Successfully")
     )
 })
 
