@@ -92,7 +92,7 @@ const Blog = () => {
     console.log(blocks);
 
     return(
-        <div className='w-screen bg-slate-950 pt-16 relative pb-10 min-h-screen'>
+        <div className='w-screen bg-slate-950 pt-16 relative pb-10 min-h-screen overflow-x-hidden'>
             <Navbar hideCreate = {true} hideSearch = {true}/>
             <div className='my-10 min-h-screen w-11/12 sm:w-9/12 mx-auto items-center flex flex-col gap-8'>
                 {blog.coverImage ? 

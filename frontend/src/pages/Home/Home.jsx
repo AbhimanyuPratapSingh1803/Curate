@@ -62,7 +62,7 @@ const Home = () => {
 
 
     return (
-        <div className="bg-slate-950 relative min-h-screen pb-20 sm:pb-20 pt-16 sm:pt-20 w-screen">
+        <div className="bg-slate-950 relative min-h-screen pb-20 sm:pb-20 pt-16 sm:pt-20 overflow-x-hidden w-screen">
             <Navbar/>
             {loading ? (
               <div className='w-screen h-[70vh] flex items-center justify-center bg-slate-950'>
