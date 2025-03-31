@@ -8,6 +8,7 @@ const Home = () => {
     const navigate = useNavigate();
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // To fetch all the blogs
     useEffect(() => {
@@ -22,6 +23,7 @@ const Home = () => {
                 console.log("Fetched all the blogs succsessfully");
                 setBlogs(data.data);
                 console.log(data.data);
+                setLoading(false);
             } catch (error) {
                 console.error("Error fetching all the blogs ", error)
             }
@@ -62,7 +64,12 @@ const Home = () => {
     return (
         <div className="bg-slate-950 relative min-h-screen pb-20 sm:pb-20 pt-16 sm:pt-20 w-screen">
             <Navbar/>
-            <div className="w-full h-full mt-10 mb-28 sm:mb-4">
+            {loading ? (
+              <div className='w-screen h-[70vh] flex items-center justify-center bg-slate-950'>
+                <span className="text-blue-600 loading loading-infinity loading-lg"></span>
+              </div>
+            ) : (
+              <div className="w-full h-full mt-10 mb-28 sm:mb-4">
                 {blogs.map((blog) => (
                     <RecommendedBlog 
                         key={blog._id}
@@ -76,7 +83,8 @@ const Home = () => {
                         page={"home"}
                     />
                 ))}
-            </div>
+              </div>
+            )}
             <div className="bottom-0 mt-4 absolute w-full">
                 <Footer/>
             </div>
