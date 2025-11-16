@@ -46,10 +46,6 @@ const RecommendedBlog = ({
 
             const data = await response.json();
             if (data.success) {
-                console.log(
-                    "Blog removed from bookmarks successfully : ",
-                    data
-                );
                 setIsBookmarked(false);
             } else {
                 console.log("Error removing from bookmarks : ", data);
@@ -75,7 +71,6 @@ const RecommendedBlog = ({
 
             const data = await response.json();
             if (data.success) {
-                console.log("Blog bookmarked successfully : ", data);
                 setIsBookmarked(true);
             } else {
                 console.log("Error bookmarking the blog : ", data);
@@ -102,7 +97,6 @@ const RecommendedBlog = ({
 
                 const data = await response.json();
                 if (data.success) {
-                    console.log("Fetched isBookmarked successfully : ", data);
                     if (data.data) setIsBookmarked(true);
                     else setIsBookmarked(false);
                 } else {
@@ -133,7 +127,6 @@ const RecommendedBlog = ({
 
             const data = await response.json();
             if (data.success) {
-                console.log("Blog deleted successfully : ", data);
                 toast.success("Blog deleted successfully");
                 dispatch(setDeletedBlog());
                 localStorage.removeItem("del");
@@ -183,7 +176,6 @@ const RecommendedBlog = ({
                 createdAt,
                 status,
             };
-            console.log(page);
             localStorage.setItem("Blog", JSON.stringify(blog));
             navigate("/create");
         }

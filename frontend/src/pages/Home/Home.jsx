@@ -20,9 +20,7 @@ const Home = () => {
                 });
 
                 const data = await response.json();
-                console.log("Fetched all the blogs succsessfully");
-                setBlogs(data.data);
-                console.log(data.data);
++                setBlogs(data.data);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching all the blogs ", error)
@@ -44,8 +42,6 @@ const Home = () => {
                 if (data && data.success) {
                     const user = JSON.stringify(data.data);
                     localStorage.setItem("User", user);
-                    console.log(JSON.parse(localStorage.getItem("User")));
-                    console.log("fetched current user successfully ", data);
                 } else {
                     console.log("Current user not found", data);
                     navigate("/login");

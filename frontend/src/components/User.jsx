@@ -22,7 +22,6 @@ const User = () => {
             if (response.ok) {
                 localStorage.removeItem("User");
                 navigate("/login");
-                console.log("User logged out Successfully", data);
                 return;
             } else {
                 console.log("Failed to logout user", data);

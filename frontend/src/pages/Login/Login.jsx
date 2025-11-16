@@ -8,8 +8,8 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("demo@gmail.com");
+    const [password, setPassword] = useState("demo1234");
     const [error, setError] = useState(null);
 
     // const {currentUser, isLoggedIn} = useSelector((state) => state.user);
@@ -39,25 +39,19 @@ const Login = () => {
             });
 
             const data = await response.json();
-            // console.log(data.data.user.loggedInuser);
             if(response.ok){
                 const user = JSON.stringify(data.data.user.loggedInuser);
-                console.log(user);
                 localStorage.setItem("User", user);
                 const current = data.data.user.loggedInuser;
-                console.log(typeof(current))
                 navigate("/");
                 setEmail("");
                 setPassword("");
-                console.log("login successful ", data);
                 toast.success("Logged in Successfully!")
             }
             else{
-                console.log("login failed ", data);
                 toast.error("Failed to Login!")
             }
         } catch (error) {
-            console.error("Error : ", error);
             toast.error("Failed to Login!")
         }
     }
@@ -71,9 +65,14 @@ const Login = () => {
                             <h1 class="mb-2 text-5xl font-extrabold text-white">
                                 Log in
                             </h1>
-                            <p class="text-xs text-slate-400">
-                                Before we start, please log into your account
-                            </p>
+                            <ul className="list-disc ml-4">
+                              <li class="text-xs text-slate-400">
+                                 Before we start, please log into your account
+                              </li>
+                              <li class="text-xs mt-1 font-light text-slate-400">
+                                   Demo Credentials are already added for testing purposes.
+                              </li>
+                            </ul>
                         </div>
                         <form onSubmit={handleSubmit} class="my-14 flex w-full flex-col items-start justify-start gap-4">
                             <div class="flex w-full flex-col items-start justify-start gap-2">
@@ -81,6 +80,7 @@ const Login = () => {
                                     Email
                                 </label>
                                 <input
+                                    value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Enter an email..."
                                     autoComplete="false"
@@ -92,6 +92,7 @@ const Login = () => {
                                     Password
                                 </label>
                                 <input
+                                    value={password}
                                     onChange={(e) =>
                                         setPassword(e.target.value)
                                     }
@@ -105,7 +106,7 @@ const Login = () => {
                             <button class="w-full bg-[#ae7aff] p-3 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e]">
                                 Log in
                             </button>
-                            <p class="my-14 text-sm font-light text-white">
+                            <p class=" text-sm font-light text-white">
                                 Don&#x27;t have an account?{" "}
                                 <Link to={"/signup"} className="underline font-medium">Create an account</Link>
                             </p>
